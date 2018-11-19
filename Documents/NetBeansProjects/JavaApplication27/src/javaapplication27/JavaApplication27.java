@@ -1,83 +1,74 @@
-package javaapplication27;
+package asignment26;
 
-import java.util.Random;
 import java.util.Scanner;
 
-public class JavaApplication27 {
+public class Asignment26 {
 
-    public static void displaywelcomemessage() {
-        System.out.println("PROJECT 02B ");
-        System.out.println("STUDENT ID :  1794805");
-        System.out.println("STUDENT NAME :  MAHENDER REDDY");
+    public static void printwelcome() {
+        System.out.println(" password must have atleast 8 characters");
+        System.out.println(" password consists only 3 letters and digits");
+        System.out.println("password must contain atleast two digits");
+        System.out.println(" ");
     }
 
-    public static int asknumber(String question) {
-        int elements;
+    public static  boolean passwordIsvalid(String p) {
+        boolean valid= true;
+        int count = 0;
+        int i;
+        if(p.length()<8){
+            System.out.println(" the password length is below 8 char with letters and digits");
+            valid = false;
+          }
+       for(i=0;i<p.length();i++){
+           if(!charIsnumber(p.charAt(i))&& !charIsLetter(p.charAt(i))){
+               valid= false;
+           }          
+       }
+       for(i=0;i<p.length();i++){
+           if(charIsnumber(p.charAt(i))){
+               count++;
+           }
+       }
+       if(count<2){
+           valid=false;
+           }
+       return valid;
+       }
+
+  public static boolean charIsLetter(char charToCheck){
+      charToCheck = Character.toUpperCase(charToCheck);
+      return(charToCheck>= 'A' && charToCheck<='Z');
+  }
+   public static boolean charIsnumber(char charToCheck){
+  
+      return(charToCheck>= '0' && charToCheck<='9'); 
+   }
+   public static String inputpassword(String message) {
+        String inputpassword;
         Scanner sc = new Scanner(System.in);
-        System.out.println(question);
-        elements = sc.nextInt();
-        return elements;
-
-    }
-
-    public static void fillwithRandom(int[] arrayvector, int elements) {
-        Random mn = new Random();
-        int i;
-        for (i = 0; i < elements; i++) {
-        arrayvector[i] = elements;
-
-        arrayvector[i] = mn.nextInt(6) + 5;
-
-        }
-    }
-
-    public static void displayarray(int[] arrayvector, int elements) {
-        
-       for (int i=0;i<elements;i++){
-           System.out.print("----");
-       }
-       
-      
-          System.out.println(" ");
-          System.out.print("|");
-        for (int i = 0; i < elements; i++) {
-        System.out.print(arrayvector[i] + " ");
-        System.out.print("|");
-        }
-        System.out.println(" ");
-      for (int i=0;i<elements;i++){
-           System.out.print("----");
-       }
-       
-        System.out.println(" ");
-
-    }
-
-    public static void displayTriangle(int arrayvector) {
-        int i;
-        int j;
-        for (i = 0; i < arrayvector; i++) {
-        for (j = 0; j <= i; j++) {
-        System.out.print("*");
-            }
-            System.out.println(" ");
-        }
+        do {
+            System.out.print(message);
+            inputpassword = sc.nextLine();
+        } while (!passwordIsvalid(inputpassword));
+        return inputpassword;
     }
 
     public static void main(String[] args) {
-        displaywelcomemessage();
-
-        int elements = asknumber("how many elements? ");
-        int[] arrayvector = new int[elements];
-
-        fillwithRandom(arrayvector, elements);
-        displayarray(arrayvector, elements);
-
-        for (int i = 0; i < elements; i++) {
-        System.out.println("Triangle " + (i + 1));
-        displayTriangle(arrayvector[i]);
-        }
-
+          printwelcome();
+        String password1;
+        String password2;
+            do {
+            password1 = inputpassword("enter password : ");
+            System.out.println(" ");
+            password2 = inputpassword("confirm password : ");
+            if (!password1.equals(password2)) {
+                System.out.println("password mismatch, try again");
+            }
+       } while (!password1.equals(password2));
+        System.out.println("*** password accepted : " +password2  +" *** ");
     }
+
+}
+
 
 }
